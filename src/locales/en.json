@@ -1,0 +1,24 @@
+{
+	"greeting": {
+		"formal": "Hello",
+		"informal": "Hi",
+		"placeholder": {
+			"formal": "Hello %s",
+			"informal": "Hi %s"
+		}
+	},
+	"auth": {
+		"signup": {
+			"success": "The user has been signed up successfully!",
+			"error": "Sorry, there is a problem. We cannot create the user requested."
+		},
+		"login": {
+			"wrongPassword": "The password is not correct.",
+			"userNotFound": "The user is not found.",
+			"success": "The user has been logged in successfully!"
+		}
+	},
+	"error": {
+		"default": "Oops, an error has occured."
+	}
+}
