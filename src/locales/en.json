@@ -20,5 +20,52 @@
 	},
 	"error": {
 		"default": "Oops, an error has occured."
+	},
+	"models": {
+		"user": {
+			"attributes": {
+				"email": "Email",
+				"password": "Password",
+				"firstName": "First Name",
+				"lastName": "Last Name",
+				"status": "Status",
+				"institution": "Institution",
+				"tabbyCatURL": "Tabby Cat URL",
+				"coachName": "Coach Name",
+				"role": "Role",
+				"createdAt": "Created At",
+				"UpdatedAt": "Updated At"
+			},
+			"statuses": {},
+			"roles": {
+				"0": "Debater",
+				"1": "Admin"
+			}
+		},
+		"notification": {
+			"attributes": {
+				"message": "Message",
+				"date": "Date",
+				"createdAt": "Created At",
+				"UpdatedAt": "Updated At"
+			}
+		},
+		"transmission": {
+			"attributes": {
+				"name": "Name",
+				"url": "Link",
+				"createdAt": "Created At",
+				"UpdatedAt": "Updated At"
+			}
+		},
+		"motion":{
+			"attributes": {
+				"title": "Title",
+				"infoSlide": "Info Slide",
+				"round": "Round",
+				"createdAt": "Created At",
+				"UpdatedAt": "Updated At"
+			}
+		}
 	}
 }

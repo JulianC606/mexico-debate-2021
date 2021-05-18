@@ -26,19 +26,23 @@ const app = express()
 connectDB()
 
 // Init Middlewares
-app.use(logger('dev'))
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-app.use(cookieParser())
-app.use(i18n.init)
-app.use(helmet())
+app.use(logger('dev')) // Logger
+app.use(express.json()) // JSON encoder
+app.use(express.urlencoded({ extended: false })) // url encoder
+app.use(cookieParser()) // cookie parser
+app.use(i18n.init) // Translations
+app.use(helmet()) // Headers
 
 // Import Auth Strategy
 require('./auth/userAuth')
 
 // Import Routers
 app.use('/api/v1/auth/', authRouter)
-app.use('/api/v1/user/', passport.authenticate('jwt', { session: false }), userRouter)
+app.use(
+  '/api/v1/user/',
+  passport.authenticate('jwt', { session: false }),
+  userRouter
+)
 app.use('/api/v1/', indexRouter)
 
 // Export Server
