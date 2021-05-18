@@ -1,0 +1,24 @@
+{
+	"greeting": {
+		"formal": "Bienvenido",
+		"informal": "Hola",
+		"placeholder": {
+			"formal": "Bienvenido %s",
+			"informal": "Hola %s"
+		}
+	},
+	"auth": {
+		"signup": {
+			"success": "El usuario a sido registrado exitosamente",
+			"error": "Lo sentimos, hay un problema. No hemos podido registrar al usuario."
+		},
+		"login": {
+			"wrongPassword": "Contraseña incorrecta.",
+			"userNotFound": "El usuario no existe.",
+			"success": "Se ha iniciado sesión correctamente."
+		}
+	},
+	"error": {
+		"default": "Oops, an error has occured."
+	}
+}

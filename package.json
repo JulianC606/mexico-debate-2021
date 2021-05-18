@@ -1,43 +1,49 @@
 {
-  "name": "mexico-debate-2021",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "https://github.com/JulianC606/mexico-debate-2021.git",
-  "author": "<Julián Cipagauta>",
-  "license": "MIT",
-  "scripts": {
-    "start": "node src/bin/www",
-    "dev": "NODE_ENV=development node src/bin/www",
-    "watch": "nodemon"
-  },
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "cookie-parser": "^1.4.5",
-    "cors": "^2.8.5",
-    "dotenv": "^9.0.2",
-    "express": "^4.17.1",
-    "helmet": "^4.6.0",
-    "http-errors": "^1.8.0",
-    "moment": "^2.29.1",
-    "mongoose": "^5.12.8",
-    "morgan": "^1.10.0",
-    "passport": "^0.4.1",
-    "validator": "^13.6.0"
-  },
-  "devDependencies": {
-    "jest": "^26.6.3",
-    "jsdoc": "^3.6.6",
-    "nodemon": "^2.0.7"
-  },
-  "nodemonConfig": {
-    "exec": "npm run dev",
-    "watch": [
-      "src/*"
-    ],
-    "ignore": [
-      "**/__tests__/**",
-      "*.test.js",
-      "*.spec.js"
-    ]
-  }
+	"name": "mexico-debate-2021",
+	"version": "1.0.0",
+	"main": "index.js",
+	"repository": "https://github.com/JulianC606/mexico-debate-2021.git",
+	"author": "<Julián Cipagauta>",
+	"license": "MIT",
+	"scripts": {
+		"start": "node src/bin/www",
+		"dev": "NODE_ENV=development node src/bin/www",
+		"watch": "nodemon",
+		"faker": "node src/bin/seed"
+	},
+	"dependencies": {
+		"bcrypt": "^5.0.1",
+		"cookie-parser": "^1.4.5",
+		"cors": "^2.8.5",
+		"dotenv": "^9.0.2",
+		"express": "^4.17.1",
+		"helmet": "^4.6.0",
+		"http-errors": "^1.8.0",
+		"i18n": "^0.13.3",
+		"jsonwebtoken": "^8.5.1",
+		"moment": "^2.29.1",
+		"mongoose": "^5.12.8",
+		"morgan": "^1.10.0",
+		"passport": "^0.4.1",
+		"passport-jwt": "^4.0.0",
+		"passport-local": "^1.0.0",
+		"validator": "^13.6.0"
+	},
+	"devDependencies": {
+		"faker": "^5.5.3",
+		"jest": "^26.6.3",
+		"jsdoc": "^3.6.6",
+		"nodemon": "^2.0.7"
+	},
+	"nodemonConfig": {
+		"exec": "yarn dev",
+		"watch": [
+			"src/*"
+		],
+		"ignore": [
+			"**/__tests__/**",
+			"*.test.js",
+			"*.spec.js"
+		]
+	}
 }
