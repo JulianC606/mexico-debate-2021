@@ -19,7 +19,14 @@
 		}
 	},
 	"error": {
-		"default": "Oops, an error has occured."
+		"default": "Oops, an error has occured.",
+		"unauthorized": {
+			"notAdmin": "This user is not allowed to READ/POST/PATCH/DELETE other user information. Please, access with an Administrator User to perform this request."
+		}
+	},
+	"httpMessages": {
+		"update": "The %s was successfully updated.",
+		"delete": "The %s was successfully deleted."
 	},
 	"models": {
 		"user": {
@@ -58,7 +65,7 @@
 				"UpdatedAt": "Updated At"
 			}
 		},
-		"motion":{
+		"motion": {
 			"attributes": {
 				"title": "Title",
 				"infoSlide": "Info Slide",
