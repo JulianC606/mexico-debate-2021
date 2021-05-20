@@ -25,7 +25,7 @@ controller.readOne = async (req, res, next) => {
     httpError.unauthorized(res, req)
   } catch (e) {
     console.error(e)
-    httpError.serverError(res, req)
+    httpError.serverError(res, req, e)
   }
 }
 
@@ -44,7 +44,7 @@ controller.readAll = async (req, res, next) => {
     httpError.unauthorized(res, req)
   } catch (e) {
     console.error(e)
-    httpError.serverError(res, req)
+    httpError.serverError(res, req, e)
   }
 }
 
@@ -83,7 +83,7 @@ controller.update = async (req, res, next) => {
     httpError.unauthorized(res, req)
   } catch (e) {
     console.error(e)
-    httpError.serverError(res, req)
+    httpError.serverError(res, req, e)
   }
 }
 
@@ -121,7 +121,7 @@ controller.deleteAll = async (req, res, next) => {
 
     res.status(200).json({
       message: res.__('httpMessages.delete', 'Users'),
-      user: deleted,
+      users: deleted,
       token: req.query.secret_token
     })
   } catch (e) {
