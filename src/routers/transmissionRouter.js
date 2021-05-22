@@ -1,5 +1,5 @@
 const express = require('express')
-const controller = require('../controllers/motionController')
+const controller = require('../controllers/transmissionController')
 
 const router = express.Router()
 
