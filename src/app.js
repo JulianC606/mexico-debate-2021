@@ -39,7 +39,7 @@ require('./auth/userAuth')
 // Import Routers
 app.use('/api/v1/auth/', authRouter)
 app.use(
-  '/api/v1/user/',
+  '/api/v1/users/',
   passport.authenticate('jwt', { session: false }),
   userRouter
 )
