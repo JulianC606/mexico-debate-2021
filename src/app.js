@@ -16,6 +16,8 @@ const indexRouter = require('./routers/indexRouter')
 const authRouter = require('./routers/authRouter')
 const userRouter = require('./routers/userRouter')
 const motionRouter = require('./routers/motionRouter')
+const notificationRouter = require('./routers/notificationRouter')
+const transmissionRouter = require('./routers/transmissionRouter')
 
 // Initializations
 dotenv.config({ path: path.join(__dirname, '..', '.env'), debug: true })
@@ -38,18 +40,20 @@ app.use(helmet()) // Headers
 require('./auth/userAuth')
 
 // Import Routers
+// Auth not required by default
 app.use('/api/v1/auth/', authRouter)
+app.use('/api/v1/motions/', motionRouter)
+app.use('/api/v1/notifications/', notificationRouter)
+app.use('/api/v1/transmissions/', transmissionRouter)
+
+// Auth required by default
 app.use(
   '/api/v1/users/',
   passport.authenticate('jwt', { session: false }),
   userRouter
 )
 
-app.use(
-  '/api/v1/motions/',
-  passport.authenticate('jwt', { session: false }),
-  motionRouter
-)
+app.use('/api/v1/motions/', motionRouter)
 app.use('/api/v1/', indexRouter)
 
 // Export Server

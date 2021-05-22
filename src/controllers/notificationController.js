@@ -19,7 +19,11 @@ controller.readOne = async (req, res, next) => {
 
 controller.readAll = async (req, res, next) => {
   try {
-    const notifications = await Notification.find({})
+    const { all } = req.query
+    const date = all
+      ? {}
+      : { date: { $lte: new Date() } }
+    const notifications = await Notification.find(date).sort({ date: 'ascending' })
     res.status(200).json({
       notifications,
       token: req.query.secret_token
