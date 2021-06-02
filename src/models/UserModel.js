@@ -15,7 +15,11 @@ const UserSchema = new Schema({
   },
   firstName: String,
   lastName: String,
-  status: String,
+  status: {
+    type: Number,
+    default: 0,
+    required: true
+  },
   institution: String,
   tabbyCatURL: String,
   coachName: String,
