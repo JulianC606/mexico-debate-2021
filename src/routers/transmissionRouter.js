@@ -1,14 +1,14 @@
-const express = require('express')
-const controller = require('../controllers/transmissionController')
+const router = require('express').Router()
+const passport = require('passport')
 
-const router = express.Router()
+const controller = require('../controllers/transmissionController')
 
 router.get('/:id', controller.readOne)
 router.get('/', controller.readAll)
-router.post('/', controller.createOne)
-router.post('/massive', controller.createMany)
-router.patch('/:id', controller.update)
-router.delete('/:id', controller.deleteOne)
-router.delete('/', controller.deleteAll)
+router.post('/', passport.authenticate('jwt', { session: false }), controller.createOne)
+router.post('/massive', passport.authenticate('jwt', { session: false }), controller.createMany)
+router.patch('/:id', passport.authenticate('jwt', { session: false }), controller.update)
+router.delete('/:id', passport.authenticate('jwt', { session: false }), controller.deleteOne)
+router.delete('/', passport.authenticate('jwt', { session: false }), controller.deleteAll)
 
 module.exports = router

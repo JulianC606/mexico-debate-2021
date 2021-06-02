@@ -53,7 +53,6 @@ app.use(
   userRouter
 )
 
-app.use('/api/v1/motions/', motionRouter)
 app.use('/api/v1/', indexRouter)
 
 // Export Server

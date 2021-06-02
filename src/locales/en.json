@@ -26,7 +26,8 @@
 	},
 	"httpMessages": {
 		"update": "The %s was successfully updated.",
-		"delete": "The %s was successfully deleted."
+		"delete": "The %s was successfully deleted.",
+		"deleteMany": "The %s were successfully deleted."
 	},
 	"models": {
 		"user": {

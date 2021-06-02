@@ -9,7 +9,7 @@ controller.readOne = async (req, res, next) => {
     const notification = await Notification.findById(id)
     res.status(200).json({
       notification,
-      token: req.query.secret_token
+      token: req.body.secretToken
     })
   } catch (e) {
     console.error(e)
@@ -19,14 +19,14 @@ controller.readOne = async (req, res, next) => {
 
 controller.readAll = async (req, res, next) => {
   try {
-    const { all } = req.query
+    const { all } = { ...req.query, ...req.body }
     const date = all
       ? {}
       : { date: { $lte: new Date() } }
     const notifications = await Notification.find(date).sort({ date: 'ascending' })
     res.status(200).json({
       notifications,
-      token: req.query.secret_token
+      token: req.body.secretToken
     })
   } catch (e) {
     console.error(e)
@@ -37,6 +37,8 @@ controller.readAll = async (req, res, next) => {
 controller.createOne = async (req, res, next) => {
   try {
     const currentUser = await User.findById(req.user._id)
+
+    console.log(currentUser)
     const { notification: attributes } = req.body
 
     if (!currentUser.isAdmin()) {
@@ -46,7 +48,7 @@ controller.createOne = async (req, res, next) => {
     const notification = await new Notification({ ...attributes }).save()
     res.status(200).json({
       notification,
-      token: req.query.secret_token
+      token: req.body.secretToken
     })
   } catch (e) {
     console.error(e)
@@ -73,7 +75,7 @@ controller.createMany = async (req, res, next) => {
 
     res.status(200).json({
       created,
-      token: req.query.secret_token
+      token: req.body.secretToken
     })
   } catch (e) {
     console.error(e)
@@ -99,7 +101,7 @@ controller.update = async (req, res, next) => {
       res.status(200).json({
         message: res.__('httpMessages.update', 'Notification'),
         user: updated,
-        token: req.query.secret_token
+        token: req.body.secretToken
       })
     }
 
@@ -124,7 +126,7 @@ controller.deleteOne = async (req, res, next) => {
     res.status(200).json({
       message: res.__('httpMessages.delete', 'Notification'),
       notification: deleted,
-      token: req.query.secret_token
+      token: req.body.secretToken
     })
   } catch (e) {
     console.error(e)
@@ -145,7 +147,7 @@ controller.deleteAll = async (req, res, next) => {
     res.status(200).json({
       message: res.__('httpMessages.delete', 'Notifications'),
       notifications: deleted,
-      token: req.query.secret_token
+      token: req.body.secretToken
     })
   } catch (e) {
     console.error(e)

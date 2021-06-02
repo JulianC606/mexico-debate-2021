@@ -6,7 +6,7 @@ module.exports = {
         message: res.__('error.unauthorized.notAdmin'),
         error: 'Unauthorized',
         status: 401,
-        token: req.query.secret_token
+        token: req.body.secretToken
       })
   },
 
@@ -16,7 +16,7 @@ module.exports = {
         message: e.stack,
         error: 'Internal Error',
         status: 500,
-        token: req.query.secret_token
+        token: req.body.secretToken
       })
   }
 }

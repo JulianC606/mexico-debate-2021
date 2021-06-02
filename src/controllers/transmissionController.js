@@ -9,7 +9,7 @@ controller.readOne = async (req, res, next) => {
     const transmission = await Transmission.findById(id)
     res.status(200).json({
       transmission,
-      token: req.query.secret_token
+      token: req.body.secretToken
     })
   } catch (e) {
     console.error(e)
@@ -22,7 +22,7 @@ controller.readAll = async (req, res, next) => {
     const transmissions = await Transmission.find({})
     res.status(200).json({
       transmissions,
-      token: req.query.secret_token
+      token: req.body.secretToken
     })
   } catch (e) {
     console.error(e)
@@ -42,7 +42,7 @@ controller.createOne = async (req, res, next) => {
     const transmission = await new Transmission({ ...attributes }).save()
     res.status(200).json({
       transmission,
-      token: req.query.secret_token
+      token: req.body.secretToken
     })
   } catch (e) {
     console.error(e)
@@ -69,7 +69,7 @@ controller.createMany = async (req, res, next) => {
 
     res.status(200).json({
       created,
-      token: req.query.secret_token
+      token: req.body.secretToken
     })
   } catch (e) {
     console.error(e)
@@ -95,7 +95,7 @@ controller.update = async (req, res, next) => {
       res.status(200).json({
         message: res.__('httpMessages.update', 'Transmission'),
         user: updated,
-        token: req.query.secret_token
+        token: req.body.secretToken
       })
     }
 
@@ -120,7 +120,7 @@ controller.deleteOne = async (req, res, next) => {
     res.status(200).json({
       message: res.__('httpMessages.delete', 'Transmission'),
       transmission: deleted,
-      token: req.query.secret_token
+      token: req.body.secretToken
     })
   } catch (e) {
     console.error(e)
@@ -139,9 +139,9 @@ controller.deleteAll = async (req, res, next) => {
     const deleted = await Transmission.deleteMany({})
 
     res.status(200).json({
-      message: res.__('httpMessages.delete', 'Transmissions'),
-      transmissions: deleted,
-      token: req.query.secret_token
+      message: res.__('httpMessages.deleteMany', 'Transmissions'),
+      info: deleted,
+      token: req.body.secretToken
     })
   } catch (e) {
     console.error(e)
