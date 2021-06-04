@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser')
 const helmet = require('helmet')
 const dotenv = require('dotenv')
 const passport = require('passport')
+const cors = require('cors')
 
 // Configurations
 const i18n = require('./config/i18n')
@@ -30,6 +31,7 @@ connectDB()
 
 // Init Middlewares
 app.use(logger('dev')) // Logger
+app.use(cors())
 app.use(express.json()) // JSON encoder
 app.use(express.urlencoded({ extended: false })) // url encoder
 app.use(cookieParser()) // cookie parser
