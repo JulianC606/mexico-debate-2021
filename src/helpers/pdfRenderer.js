@@ -55,7 +55,7 @@ class PDFRenderer {
 
   async renderPDF (req) {
     const html = await this.rendererHTML(req)
-    const browser = await puppeteer.launch({ headless: true })
+    const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] })
     const page = await browser.newPage()
     await page.setContent(html)
     await page.evaluateHandle('document.fonts.ready')
