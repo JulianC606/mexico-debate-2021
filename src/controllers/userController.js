@@ -33,7 +33,6 @@ controller.readOne = async (req, res, next) => {
 controller.readAll = async (req, res, next) => {
   try {
     const currentUser = await User.findById(req.user._id)
-    console.log(req.user._id)
 
     if (currentUser.isAdmin()) {
       const users = await User.find({})
