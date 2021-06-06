@@ -12,4 +12,8 @@ router.patch('/:id', controller.update)
 router.delete('/:id', controller.deleteOne)
 router.delete('/', controller.deleteAll)
 
+// Custom Routes
+
+router.get('/:id/diploma', controller.diploma)
+
 module.exports = router
