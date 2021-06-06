@@ -33,6 +33,7 @@ controller.readOne = async (req, res, next) => {
 controller.readAll = async (req, res, next) => {
   try {
     const currentUser = await User.findById(req.user._id)
+    console.log(req.user._id)
 
     if (currentUser.isAdmin()) {
       const users = await User.find({})
@@ -123,6 +124,30 @@ controller.deleteAll = async (req, res, next) => {
     return res.status(200).json({
       message: res.__('httpMessages.delete', 'Users'),
       users: deleted,
+      token: req.body.secretToken
+    })
+  } catch (e) {
+    console.error(e)
+    httpError.serverError(res, req, e)
+  }
+}
+
+// Custom Routes
+
+controller.diploma = async (req, res, next) => {
+  try {
+    const currentUser = await User.findById(req.user._id)
+
+    if (currentUser.id !== req.params.id && !currentUser.isAdmin()) {
+      return httpError.unauthorized(res, req)
+    }
+
+    const buffer = await currentUser.sendDiploma(req)
+
+    res.json({
+      data: {
+        pdf: buffer.toString('base64')
+      },
       token: req.body.secretToken
     })
   } catch (e) {

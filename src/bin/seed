@@ -47,7 +47,7 @@
         coachName: faker.name.firstName() + ' ' + faker.name.lastName()
       })
       await user.save()
-      console.log('User: ', user.fullname(), 'Created')
+      console.log('User: ', user.fullname, 'Created')
     }
 
     for (let i = 0; i < faker.datatype.number({ min: 20, max: 100 }); i++) {

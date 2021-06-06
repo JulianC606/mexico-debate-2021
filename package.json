@@ -16,6 +16,7 @@
 		"cookie-parser": "^1.4.5",
 		"cors": "^2.8.5",
 		"dotenv": "^9.0.2",
+		"ejs": "^3.1.6",
 		"express": "^4.17.1",
 		"helmet": "^4.6.0",
 		"http-errors": "^1.8.0",
@@ -27,6 +28,7 @@
 		"passport": "^0.4.1",
 		"passport-jwt": "^4.0.0",
 		"passport-local": "^1.0.0",
+		"puppeteer": "^10.0.0",
 		"validator": "^13.6.0"
 	},
 	"devDependencies": {
@@ -37,6 +39,7 @@
 	},
 	"nodemonConfig": {
 		"exec": "yarn dev",
+		"ext": ".*",
 		"watch": [
 			"src/*"
 		],
