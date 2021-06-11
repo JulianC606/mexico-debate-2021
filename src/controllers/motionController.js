@@ -8,8 +8,9 @@ controller.readOne = async (req, res, next) => {
     const { id } = req.params
     const motion = await Motion.findById(id)
     res.status(200).json({
-      motion,
-      token: req.body.secretToken
+      data: {
+        motion
+      }
     })
   } catch (e) {
     console.error(e)
@@ -21,8 +22,9 @@ controller.readAll = async (req, res, next) => {
   try {
     const motions = await Motion.find({})
     res.status(200).json({
-      motions,
-      token: req.body.secretToken
+      data: {
+        motions
+      }
     })
   } catch (e) {
     console.error(e)
@@ -41,8 +43,9 @@ controller.createOne = async (req, res, next) => {
 
     const motion = await new Motion({ ...attributes }).save()
     res.status(200).json({
-      motion,
-      token: req.body.secretToken
+      data: {
+        motion
+      }
     })
   } catch (e) {
     console.error(e)
@@ -53,14 +56,14 @@ controller.createOne = async (req, res, next) => {
 controller.createMany = async (req, res, next) => {
   try {
     const currentUser = await User.findById(req.user._id)
-    const { motions } = req.body
+    const { motions: body } = req.body
 
     if (!currentUser.isAdmin()) {
       httpError.unauthorized(res, req)
     }
 
-    const created = await Promise.all(
-      motions.map(
+    const motions = await Promise.all(
+      body.map(
         async (attr) => {
           return await new Motion({ ...attr }).save()
         }
@@ -68,8 +71,9 @@ controller.createMany = async (req, res, next) => {
     )
 
     res.status(200).json({
-      created,
-      token: req.body.secretToken
+      data: {
+        motions
+      }
     })
   } catch (e) {
     console.error(e)
@@ -84,17 +88,19 @@ controller.update = async (req, res, next) => {
     const { motion: updates } = req.body
 
     if (currentUser.isAdmin()) {
-      const motion = await Motion.findById(id)
+      let motion = await Motion.findById(id)
 
       Object.entries(updates).forEach(([prop, value]) => {
         motion[prop] = value
       })
 
-      const updated = await motion.save()
+      motion = await motion.save()
 
       res.status(200).json({
         message: res.__('httpMessages.update', 'Motion'),
-        user: updated,
+        data: {
+          motion
+        },
         token: req.body.secretToken
       })
     }
@@ -115,12 +121,10 @@ controller.deleteOne = async (req, res, next) => {
       httpError.unauthorized(res, req)
     }
 
-    const deleted = await Motion.findByIdAndDelete(id)
+    await Motion.findByIdAndDelete(id)
 
     res.status(200).json({
-      message: res.__('httpMessages.delete', 'Motion'),
-      motion: deleted,
-      token: req.body.secretToken
+      message: res.__('httpMessages.delete', 'Motion')
     })
   } catch (e) {
     console.error(e)
@@ -136,12 +140,10 @@ controller.deleteAll = async (req, res, next) => {
       httpError.unauthorized(res, req)
     }
 
-    const deleted = await Motion.deleteMany({})
+    await Motion.deleteMany({})
 
     res.status(200).json({
-      message: res.__('httpMessages.deleteMany', 'Motions'),
-      info: deleted,
-      token: req.body.secretToken
+      message: res.__('httpMessages.deleteMany', 'Motions')
     })
   } catch (e) {
     console.error(e)

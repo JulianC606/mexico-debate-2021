@@ -56,12 +56,14 @@ passport.use(
   new JWTstrategy(
     {
       secretOrKey: process.env.API_KEY,
-      jwtFromRequest: ExtractJWT.fromBodyField('secretToken')
+      jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
     },
     async (token, done) => {
       try {
+        console.log(token)
         return done(null, token.user)
       } catch (error) {
+        console.log(error)
         done(error)
       }
     }

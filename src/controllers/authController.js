@@ -22,11 +22,12 @@ controller.login = async (req, res, next) => {
         if (error) return next(error)
 
         const body = { _id: user._id, email: user.email }
-        const token = jwt.sign({ user: body }, process.env.API_KEY)
+        const token = jwt.sign({ user: body }, process.env.API_KEY, { expiresIn: '1h' })
 
-        return res.status(200).json({ token })
+        return res.status(200).json({ token, data: { user } })
       })
     } catch (error) {
+      console.error(error)
       return next(error)
     }
   })(req, res, next)

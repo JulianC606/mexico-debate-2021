@@ -8,8 +8,7 @@ controller.readOne = async (req, res, next) => {
     const { id } = req.params
     const transmission = await Transmission.findById(id)
     res.status(200).json({
-      transmission,
-      token: req.body.secretToken
+      data: { transmission }
     })
   } catch (e) {
     console.error(e)
@@ -21,8 +20,7 @@ controller.readAll = async (req, res, next) => {
   try {
     const transmissions = await Transmission.find({})
     res.status(200).json({
-      transmissions,
-      token: req.body.secretToken
+      data: { transmissions }
     })
   } catch (e) {
     console.error(e)
@@ -41,8 +39,7 @@ controller.createOne = async (req, res, next) => {
 
     const transmission = await new Transmission({ ...attributes }).save()
     res.status(200).json({
-      transmission,
-      token: req.body.secretToken
+      data: { transmission }
     })
   } catch (e) {
     console.error(e)
@@ -53,14 +50,14 @@ controller.createOne = async (req, res, next) => {
 controller.createMany = async (req, res, next) => {
   try {
     const currentUser = await User.findById(req.user._id)
-    const { transmissions } = req.body
+    const { transmissions: body } = req.body
 
     if (!currentUser.isAdmin()) {
       httpError.unauthorized(res, req)
     }
 
-    const created = await Promise.all(
-      transmissions.map(
+    const transmissions = await Promise.all(
+      body.map(
         async (attr) => {
           return await new Transmission({ ...attr }).save()
         }
@@ -68,8 +65,7 @@ controller.createMany = async (req, res, next) => {
     )
 
     res.status(200).json({
-      created,
-      token: req.body.secretToken
+      data: { transmissions }
     })
   } catch (e) {
     console.error(e)
@@ -84,18 +80,17 @@ controller.update = async (req, res, next) => {
     const { transmission: updates } = req.body
 
     if (currentUser.isAdmin()) {
-      const transmission = await Transmission.findById(id)
+      let transmission = await Transmission.findById(id)
 
       Object.entries(updates).forEach(([prop, value]) => {
         transmission[prop] = value
       })
 
-      const updated = await transmission.save()
+      transmission = await transmission.save()
 
       res.status(200).json({
         message: res.__('httpMessages.update', 'Transmission'),
-        user: updated,
-        token: req.body.secretToken
+        data: { transmission }
       })
     }
 
@@ -115,13 +110,9 @@ controller.deleteOne = async (req, res, next) => {
       httpError.unauthorized(res, req)
     }
 
-    const deleted = await Transmission.findByIdAndDelete(id)
+    await Transmission.findByIdAndDelete(id)
 
-    res.status(200).json({
-      message: res.__('httpMessages.delete', 'Transmission'),
-      transmission: deleted,
-      token: req.body.secretToken
-    })
+    res.status(200).json({ message: res.__('httpMessages.delete', 'Transmission') })
   } catch (e) {
     console.error(e)
     httpError.serverError(res, req, e)
@@ -136,12 +127,10 @@ controller.deleteAll = async (req, res, next) => {
       httpError.unauthorized(res, req)
     }
 
-    const deleted = await Transmission.deleteMany({})
+    await Transmission.deleteMany({})
 
     res.status(200).json({
-      message: res.__('httpMessages.deleteMany', 'Transmissions'),
-      info: deleted,
-      token: req.body.secretToken
+      message: res.__('httpMessages.deleteMany', 'Transmissions')
     })
   } catch (e) {
     console.error(e)

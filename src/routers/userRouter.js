@@ -15,5 +15,6 @@ router.delete('/', controller.deleteAll)
 // Custom Routes
 
 router.get('/:id/diploma', controller.diploma)
+router.get('/:id/justificante', controller.justificante)
 
 module.exports = router

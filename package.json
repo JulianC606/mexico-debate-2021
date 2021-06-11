@@ -6,7 +6,7 @@
 	"author": "<Julián Cipagauta>",
 	"license": "MIT",
 	"scripts": {
-		"start": "node src/bin/www",
+		"start": "NODE_ENV=production node src/bin/www",
 		"dev": "NODE_ENV=development node src/bin/www",
 		"watch": "nodemon",
 		"faker": "node src/bin/seed"

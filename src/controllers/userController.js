@@ -4,13 +4,13 @@ const controller = {}
 
 controller.readOne = async (req, res, next) => {
   try {
+    console.log(req.user)
     const currentUser = await User.findById(req.user._id)
     const { id } = req.params
 
     if (id.toString() === currentUser._id.toString()) {
       return res.status(200).json({
-        user: currentUser,
-        token: req.body.secretToken
+        data: { user: currentUser }
       })
     }
 
@@ -18,8 +18,7 @@ controller.readOne = async (req, res, next) => {
       const user = await User.findById(id)
 
       return res.status(200).json({
-        user,
-        token: req.body.secretToken
+        data: { user }
       })
     }
 
@@ -37,8 +36,7 @@ controller.readAll = async (req, res, next) => {
     if (currentUser.isAdmin()) {
       const users = await User.find({})
       return res.status(200).json({
-        users,
-        token: req.body.secretToken
+        data: { users }
       })
     }
 
@@ -59,25 +57,23 @@ controller.update = async (req, res, next) => {
       Object.entries(updates).forEach(([prop, value]) => {
         currentUser[prop] = value
       })
-      const updated = await currentUser.save()
+      const user = await currentUser.save()
       return res.status(200).json({
         message: res.__('httpMessages.update', 'User'),
-        user: updated,
-        token: req.body.secretToken
+        data: { user }
       })
     }
 
     if (currentUser.isAdmin()) {
-      const user = await User.findById(id)
+      let user = await User.findById(id)
 
       Object.entries(updates).forEach(([prop, value]) => {
         user[prop] = value
       })
-      const updated = await user.save()
+      user = await user.save()
       return res.status(200).json({
         message: res.__('httpMessages.update', 'User'),
-        user: updated,
-        token: req.body.secretToken
+        user
       })
     }
 
@@ -97,12 +93,10 @@ controller.deleteOne = async (req, res, next) => {
       return httpError.unauthorized(res, req)
     }
 
-    const deleted = await User.findByIdAndDelete(id)
+    await User.findByIdAndDelete(id)
 
     return res.status(200).json({
-      message: res.__('httpMessages.delete', 'User'),
-      user: deleted,
-      token: req.body.secretToken
+      message: res.__('httpMessages.delete', 'User')
     })
   } catch (e) {
     console.error(e)
@@ -118,12 +112,10 @@ controller.deleteAll = async (req, res, next) => {
       return httpError.unauthorized(res, req)
     }
 
-    const deleted = await User.deleteMany({})
+    await User.deleteMany({})
 
     return res.status(200).json({
-      message: res.__('httpMessages.delete', 'Users'),
-      users: deleted,
-      token: req.body.secretToken
+      message: res.__('httpMessages.delete', 'Users')
     })
   } catch (e) {
     console.error(e)
@@ -145,9 +137,8 @@ controller.diploma = async (req, res, next) => {
 
     res.json({
       data: {
-        pdf: buffer.toString('base64')
-      },
-      token: req.body.secretToken
+        diploma: buffer.toString('base64')
+      }
     })
   } catch (e) {
     console.error(e)
@@ -167,9 +158,8 @@ controller.justificante = async (req, res, next) => {
 
     res.json({
       data: {
-        pdf: buffer.toString('base64')
-      },
-      token: req.body.secretToken
+        justificante: buffer.toString('base64')
+      }
     })
   } catch (e) {
     console.error(e)

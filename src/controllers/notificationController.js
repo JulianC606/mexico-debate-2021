@@ -8,8 +8,7 @@ controller.readOne = async (req, res, next) => {
     const { id } = req.params
     const notification = await Notification.findById(id)
     res.status(200).json({
-      notification,
-      token: req.body.secretToken
+      data: { notification }
     })
   } catch (e) {
     console.error(e)
@@ -25,8 +24,7 @@ controller.readAll = async (req, res, next) => {
       : { date: { $lte: new Date() } }
     const notifications = await Notification.find(date).sort({ date: 'ascending' })
     res.status(200).json({
-      notifications,
-      token: req.body.secretToken
+      data: { notifications }
     })
   } catch (e) {
     console.error(e)
@@ -46,8 +44,7 @@ controller.createOne = async (req, res, next) => {
 
     const notification = await new Notification({ ...attributes }).save()
     res.status(200).json({
-      notification,
-      token: req.body.secretToken
+      data: { notification }
     })
   } catch (e) {
     console.error(e)
@@ -58,14 +55,14 @@ controller.createOne = async (req, res, next) => {
 controller.createMany = async (req, res, next) => {
   try {
     const currentUser = await User.findById(req.user._id)
-    const { notifications } = req.body
+    const { notifications: body } = req.body
 
     if (!currentUser.isAdmin()) {
       httpError.unauthorized(res, req)
     }
 
-    const created = await Promise.all(
-      notifications.map(
+    const notifications = await Promise.all(
+      body.map(
         async (attr) => {
           return await new Notification({ ...attr }).save()
         }
@@ -73,8 +70,7 @@ controller.createMany = async (req, res, next) => {
     )
 
     res.status(200).json({
-      created,
-      token: req.body.secretToken
+      data: { notifications }
     })
   } catch (e) {
     console.error(e)
@@ -89,18 +85,17 @@ controller.update = async (req, res, next) => {
     const { notification: updates } = req.body
 
     if (currentUser.isAdmin()) {
-      const notification = await Notification.findById(id)
+      let notification = await Notification.findById(id)
 
       Object.entries(updates).forEach(([prop, value]) => {
         notification[prop] = value
       })
 
-      const updated = await notification.save()
+      notification = await notification.save()
 
       res.status(200).json({
         message: res.__('httpMessages.update', 'Notification'),
-        user: updated,
-        token: req.body.secretToken
+        data: { notification }
       })
     }
 
@@ -120,12 +115,10 @@ controller.deleteOne = async (req, res, next) => {
       httpError.unauthorized(res, req)
     }
 
-    const deleted = await Notification.findByIdAndDelete(id)
+    await Notification.findByIdAndDelete(id)
 
     res.status(200).json({
-      message: res.__('httpMessages.delete', 'Notification'),
-      notification: deleted,
-      token: req.body.secretToken
+      message: res.__('httpMessages.delete', 'Notification')
     })
   } catch (e) {
     console.error(e)
@@ -141,12 +134,10 @@ controller.deleteAll = async (req, res, next) => {
       httpError.unauthorized(res, req)
     }
 
-    const deleted = await Notification.deleteMany({})
+    await Notification.deleteMany({})
 
     res.status(200).json({
-      message: res.__('httpMessages.delete', 'Notifications'),
-      notifications: deleted,
-      token: req.body.secretToken
+      message: res.__('httpMessages.delete', 'Notifications')
     })
   } catch (e) {
     console.error(e)
