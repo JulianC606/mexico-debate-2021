@@ -28,6 +28,21 @@ class PDFRenderer {
             }
           }
         }
+      case 'justificante':
+        return {
+          path: path.join(__dirname, '../templates/justificante.ejs'),
+          opts: {
+            format: 'Letter',
+            landscape: true,
+            printBackground: true,
+            margin: {
+              left: '0px',
+              top: '0px',
+              right: '0px',
+              bottom: '0px'
+            }
+          }
+        }
     }
   }
 
@@ -35,7 +50,6 @@ class PDFRenderer {
     return (
       new Promise(
         (resolve, reject) => {
-          console.log(req)
           ejs.renderFile(
             this.template,
             { data: { user: this.user, base: `${req.protocol}://${req.get('host')}` } },

@@ -52,6 +52,12 @@ UserSchema.methods.sendDiploma = async function (req) {
   return pdf
 }
 
+UserSchema.methods.sendJustificante = async function (req) {
+  const pdfRenderer = new PDFRenderer(this, 'justificante')
+  const pdf = await pdfRenderer.renderPDF(req)
+  return pdf
+}
+
 UserSchema.methods.sendHTMLDiploma = async function (req) {
   const pdfRenderer = new PDFRenderer(this, req, 'diploma')
   const pdf = await pdfRenderer.renderHTML(req)

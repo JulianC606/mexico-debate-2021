@@ -38,7 +38,6 @@ controller.createOne = async (req, res, next) => {
   try {
     const currentUser = await User.findById(req.user._id)
 
-    console.log(currentUser)
     const { notification: attributes } = req.body
 
     if (!currentUser.isAdmin()) {

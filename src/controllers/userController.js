@@ -155,4 +155,26 @@ controller.diploma = async (req, res, next) => {
   }
 }
 
+controller.justificante = async (req, res, next) => {
+  try {
+    const currentUser = await User.findById(req.user._id)
+
+    if (currentUser.id !== req.params.id && !currentUser.isAdmin()) {
+      return httpError.unauthorized(res, req)
+    }
+
+    const buffer = await currentUser.sendJustificante(req)
+
+    res.json({
+      data: {
+        pdf: buffer.toString('base64')
+      },
+      token: req.body.secretToken
+    })
+  } catch (e) {
+    console.error(e)
+    httpError.serverError(res, req, e)
+  }
+}
+
 module.exports = controller
