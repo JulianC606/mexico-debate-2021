@@ -1,22 +1,28 @@
 const passport = require('passport')
 const jwt = require('jsonwebtoken')
+const httpError = require('../helpers/httpErrors')
 
 const controller = {}
 
 controller.signup = async (req, res, next) => {
-  for (const key in req.body) {
-    if (['password', 'email', 'id'].includes(key)) {
-      continue
+  try {
+    for (const key in req.body) {
+      if (['password', 'email', 'id'].includes(key)) {
+        continue
+      }
+      req.user[key] = req.body[key]
     }
-    req.user[key] = req.body[key]
+    const user = await req.user.save()
+    console.log(req.body)
+    console.log(req.user)
+    res.json({
+      message: res.__('auth.signup.success'),
+      data: { user: user.response() }
+    })
+  } catch (error) {
+    console.error(error.message)
+    return httpError.serverError(res, req, error)
   }
-  const user = await req.user.save()
-  console.log(req.body)
-  console.log(req.user)
-  res.json({
-    message: res.__('auth.signup.success'),
-    data: { user: user.response() }
-  })
 }
 
 controller.login = async (req, res, next) => {
