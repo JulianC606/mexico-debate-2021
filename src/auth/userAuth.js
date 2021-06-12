@@ -1,6 +1,6 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
-const UserModel = require('../models/UserModel')
+const User = require('../models/UserModel')
 
 passport.use(
   'signup',
@@ -10,12 +10,8 @@ passport.use(
       passwordField: 'password'
     },
     (email, password, done) => {
-      UserModel.create({ email, password })
-        .then(user => done(null, user))
-        .catch(error => {
-          console.error(error)
-          done(error)
-        })
+      const user = new User({ email, password })
+      done(null, user)
     }
   )
 )
@@ -29,7 +25,7 @@ passport.use(
     },
     async (email, password, done) => {
       try {
-        const user = await UserModel.findOne({ email })
+        const user = await User.findOne({ email })
 
         if (!user) {
           return done(null, false, { error: 'userNotFound', message: 'auth.login.userNotFound', status: 401 })

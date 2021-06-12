@@ -3,10 +3,19 @@ const jwt = require('jsonwebtoken')
 
 const controller = {}
 
-controller.signup = (req, res, next) => {
+controller.signup = async (req, res, next) => {
+  for (const key in req.body) {
+    if (['password', 'email', 'id'].includes(key)) {
+      continue
+    }
+    req.user[key] = req.body[key]
+  }
+  const user = await req.user.save()
+  console.log(req.body)
+  console.log(req.user)
   res.json({
     message: res.__('auth.signup.success'),
-    user: req.user
+    data: { user: user.response() }
   })
 }
 
