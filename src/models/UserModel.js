@@ -73,10 +73,10 @@ UserSchema.methods.isAdmin = function () {
 }
 
 UserSchema.methods.response = function () {
-  const { email, firstName, lastName, status, institution, tabbyCatURL, coachName, role } = this
+  const { _id: id, email, firstName, lastName, status, institution, tabbyCatURL, coachName, role } = this
   const fullname = this.fullname
   return {
-    email, firstName, lastName, fullname, status, institution, tabbyCatURL, coachName, role
+    id, email, firstName, lastName, fullname, status, institution, tabbyCatURL, coachName, role
   }
 }
 
