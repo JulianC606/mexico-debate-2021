@@ -30,7 +30,10 @@
       lastName: faker.name.lastName(),
       status: 0,
       institution: faker.company.companyName(),
-      role: 1
+      role: 1,
+      tabbyCatURL: faker.internet.url(),
+      coachName: faker.name.firstName() + ' ' + faker.name.lastName()
+
     })
 
     await admin.save()

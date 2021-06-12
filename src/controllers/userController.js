@@ -10,7 +10,7 @@ controller.readOne = async (req, res, next) => {
 
     if (id.toString() === currentUser._id.toString()) {
       return res.status(200).json({
-        data: { user: currentUser }
+        data: { user: currentUser.response() }
       })
     }
 
@@ -18,7 +18,7 @@ controller.readOne = async (req, res, next) => {
       const user = await User.findById(id)
 
       return res.status(200).json({
-        data: { user }
+        data: { user: user.response() }
       })
     }
 
@@ -34,7 +34,8 @@ controller.readAll = async (req, res, next) => {
     const currentUser = await User.findById(req.user._id)
 
     if (currentUser.isAdmin()) {
-      const users = await User.find({})
+      let users = await User.find({})
+      users = users.map(user => user.response())
       return res.status(200).json({
         data: { users }
       })
@@ -60,7 +61,7 @@ controller.update = async (req, res, next) => {
       const user = await currentUser.save()
       return res.status(200).json({
         message: res.__('httpMessages.update', 'User'),
-        data: { user }
+        data: { user: user.response() }
       })
     }
 
@@ -73,7 +74,7 @@ controller.update = async (req, res, next) => {
       user = await user.save()
       return res.status(200).json({
         message: res.__('httpMessages.update', 'User'),
-        user
+        user: user.response()
       })
     }
 

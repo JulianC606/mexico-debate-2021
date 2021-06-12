@@ -72,6 +72,14 @@ UserSchema.methods.isAdmin = function () {
   return this.role === 1
 }
 
+UserSchema.methods.response = function () {
+  const { email, firstName, lastName, status, institution, tabbyCatURL, coachName, role } = this
+  const fullname = this.fullname
+  return {
+    email, firstName, lastName, fullname, status, institution, tabbyCatURL, coachName, role
+  }
+}
+
 const UserModel = mongoose.model('user', UserSchema)
 
 module.exports = UserModel
