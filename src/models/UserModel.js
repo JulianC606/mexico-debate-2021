@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const PDFRenderer = require('../helpers/pdfRenderer')
+const emailer = require('../helpers/emailer')
 
 const Schema = mongoose.Schema
 
@@ -28,13 +29,16 @@ const UserSchema = new Schema({
     type: Number,
     default: 0,
     required: true
-  }
+  },
+  curp: String
 }, { timestamps: true })
 
 UserSchema.pre('save', async function (next) {
   const user = this
 
   if (!user.isModified('password')) return next()
+
+  await emailer.newUserEmail(user)
 
   const hash = await bcrypt.hash(user.password, 10)
 
