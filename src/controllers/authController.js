@@ -13,8 +13,6 @@ controller.signup = async (req, res, next) => {
       req.user[key] = req.body[key]
     }
     const user = await req.user.save()
-    console.log(req.body)
-    console.log(req.user)
     res.json({
       message: res.__('auth.signup.success'),
       data: { user: user.response() }

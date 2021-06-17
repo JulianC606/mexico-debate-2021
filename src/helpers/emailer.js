@@ -53,3 +53,18 @@ exports.newUserEmail = (user) => {
     .catch(err => reject(err))
   )
 }
+
+exports.newUserImport = (output, day) => {
+  return new Promise((resolve, reject) => sendEmail({
+    subject: 'Importación Masiva de Usuarios - México Debate',
+    text: `Hola!\r\n\r\n Se realizo una nueva importación de usuarios: ${day}\r\n`,
+    to: process.env.ADMIN_EMAIL,
+    from: process.env.EMAIL,
+    attachments: [
+      { path: output }
+    ]
+  })
+    .then(res => resolve(res))
+    .catch(err => reject(err))
+  )
+}
