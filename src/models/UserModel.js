@@ -33,6 +33,12 @@ const UserSchema = new Schema({
     type: String,
     default: '',
     required: true
+  },
+  coachNumber: String,
+  coachEmail: String,
+  attendedWorkShops: {
+    type: Boolean,
+    default: false
   }
 }, { timestamps: true })
 
@@ -81,10 +87,37 @@ UserSchema.methods.isAdmin = function () {
 }
 
 UserSchema.methods.response = function () {
-  const { _id: id, email, firstName, lastName, status, institution, tabbyCatURL, coachName, role } = this
+  const {
+    _id: id,
+    email,
+    firstName,
+    lastName,
+    status,
+    institution,
+    tabbyCatURL,
+    coachName,
+    role,
+    curp,
+    coachEmail,
+    coachNumber,
+    attendedWorkShops
+  } = this
   const fullname = this.fullname
   return {
-    id, email, firstName, lastName, fullname, status, institution, tabbyCatURL, coachName, role
+    id,
+    email,
+    firstName,
+    lastName,
+    fullname,
+    status,
+    institution,
+    tabbyCatURL,
+    coachName,
+    role,
+    curp,
+    coachEmail,
+    coachNumber,
+    attendedWorkShops
   }
 }
 

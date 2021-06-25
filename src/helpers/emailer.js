@@ -1,6 +1,8 @@
 const nodemailer = require('nodemailer')
 const { google } = require('googleapis')
 const OAuth2 = google.auth.OAuth2
+const ejs = require('ejs')
+const path = require('path')
 
 const createTransporter = async () => {
   const oauth2Client = new OAuth2(
@@ -42,16 +44,42 @@ const sendEmail = async (emailOptions) => {
   await emailTransporter.sendMail(emailOptions)
 }
 
-exports.newUserEmail = (user) => {
-  return new Promise((resolve, reject) => sendEmail({
-    subject: 'Credenciales de Autenticación - México Debate',
-    text: `Hola ${user.firstName}!\n\nTe saludamos desde la organización de Mexico Debate. Te mandamos el presente para brindarte la información del login en nuestra plataforma:\n\nUsuario: ${user.email}\nContraseña: ${user.password}\n\nTe deseamos un feliz día.\n\nAtentamente,\n\nMexico Debate`,
-    to: user.email,
-    from: process.env.EMAIL
-  })
-    .then(res => resolve(res))
-    .catch(err => reject(err))
+const newUserHTML = (firstName, password, email) => {
+  return (
+    new Promise((resolve, reject) => {
+      ejs.renderFile(
+        path.join(__dirname, '../templates/emails/newUser.ejs'),
+        { data: { firstName, password, email } },
+        {},
+        (err, html) => {
+          if (err !== null) {
+            reject(err)
+          } else {
+            resolve(html)
+          }
+        }
+      )
+    }
+    )
   )
+}
+
+exports.newUserEmail = async (firstName, password, email) => {
+  try {
+    const html = await newUserHTML(firstName, password, email)
+    return new Promise((resolve, reject) => sendEmail({
+      subject: 'Credenciales de Autenticación - México Debate',
+      html,
+      to: email,
+      from: process.env.EMAIL
+    })
+      .then(res => resolve(res))
+      .catch(err => reject(err))
+    )
+  } catch (e) {
+    console.error(e)
+    return e
+  }
 }
 
 exports.newUserImport = (output, day) => {
