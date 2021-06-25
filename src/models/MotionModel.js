@@ -12,8 +12,8 @@ const MotionSchema = new Schema(
       type: String,
       required: true
     },
-    infoSlide: String
-
+    infoSlide: String,
+    category: String
   }, {
     timestamps: true
   }

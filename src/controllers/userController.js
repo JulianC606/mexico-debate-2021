@@ -4,7 +4,6 @@ const controller = {}
 
 controller.readOne = async (req, res, next) => {
   try {
-    console.log(req.user)
     const currentUser = await User.findById(req.user._id)
     const { id } = req.params
 

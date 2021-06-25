@@ -28,11 +28,25 @@ const UserSchema = new Schema({
     type: Number,
     default: 0,
     required: true
+  },
+  curp: {
+    type: String,
+    default: '',
+    required: true
+  },
+  coachNumber: String,
+  coachEmail: String,
+  attendedWorkShops: {
+    type: Boolean,
+    default: false
   }
 }, { timestamps: true })
 
 UserSchema.pre('save', async function (next) {
   const user = this
+
+  if (!user.isModified('password')) return next()
+
   const hash = await bcrypt.hash(user.password, 10)
 
   user.password = hash
@@ -73,10 +87,37 @@ UserSchema.methods.isAdmin = function () {
 }
 
 UserSchema.methods.response = function () {
-  const { _id: id, email, firstName, lastName, status, institution, tabbyCatURL, coachName, role } = this
+  const {
+    _id: id,
+    email,
+    firstName,
+    lastName,
+    status,
+    institution,
+    tabbyCatURL,
+    coachName,
+    role,
+    curp,
+    coachEmail,
+    coachNumber,
+    attendedWorkShops
+  } = this
   const fullname = this.fullname
   return {
-    id, email, firstName, lastName, fullname, status, institution, tabbyCatURL, coachName, role
+    id,
+    email,
+    firstName,
+    lastName,
+    fullname,
+    status,
+    institution,
+    tabbyCatURL,
+    coachName,
+    role,
+    curp,
+    coachEmail,
+    coachNumber,
+    attendedWorkShops
   }
 }
 

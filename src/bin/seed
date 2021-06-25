@@ -32,8 +32,10 @@
       institution: faker.company.companyName(),
       role: 1,
       tabbyCatURL: faker.internet.url(),
-      coachName: faker.name.firstName() + ' ' + faker.name.lastName()
-
+      coachName: faker.name.firstName() + ' ' + faker.name.lastName(),
+      curp: faker.lorem.word(10),
+      coachEmail: faker.internet.email(),
+      coachNumber: faker.phone.phoneNumber()
     })
 
     await admin.save()
@@ -47,7 +49,10 @@
         status: 0,
         institution: faker.company.companyName(),
         tabbyCatURL: faker.internet.url(),
-        coachName: faker.name.firstName() + ' ' + faker.name.lastName()
+        coachName: faker.name.firstName() + ' ' + faker.name.lastName(),
+        curp: faker.lorem.word(10),
+        coachEmail: faker.internet.email(),
+        coachNumber: faker.phone.phoneNumber()
       })
       await user.save()
       console.log('User: ', user.fullname, 'Created')
@@ -57,7 +62,8 @@
       const motion = new Motion({
         title: faker.lorem.words(10),
         infoSlide: faker.lorem.paragraphs(faker.datatype.number({ min: 0, max: 4 })),
-        round: i
+        round: i,
+        category: faker.random.arrayElement(['mayor', 'menor'])
       })
       await motion.save()
       console.log('Motion:', motion.title, 'Created')

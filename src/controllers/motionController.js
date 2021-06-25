@@ -20,7 +20,9 @@ controller.readOne = async (req, res, next) => {
 
 controller.readAll = async (req, res, next) => {
   try {
-    const motions = await Motion.find({})
+    const { category } = { ...req.query, ...req.body }
+    const filter = category ? { category } : {}
+    const motions = await Motion.find(filter)
     res.status(200).json({
       data: {
         motions
