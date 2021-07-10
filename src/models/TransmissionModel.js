@@ -8,7 +8,8 @@ const TransmissionSchema = new Schema({
     required: true
   },
   description: {
-    type: String
+    type: String,
+    default: ''
   },
   url: {
     type: String,
