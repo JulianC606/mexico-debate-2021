@@ -1,10 +1,78 @@
-<%- include('layouts/header') -%>
+<!DOCTYPE html>
+<html lang="en">
 
-  <body>
-    <h1>
-      Hola
-      <%= data.user.fullname %>
-    </h1>
-  </body>
+<head>
+  <style>
+    body {
+      font-family: 'Arial', 'Open Sans', sans-serif;
+      font-size: 12pt !important;
+    }
 
-  <%- include('layouts/footer') -%>
+    p {
+      text-align: justify;
+    }
+  </style>
+  <title></title>
+</head>
+
+<body>
+  <header style='margin-left:40%; width: 60%;'>
+    <p style='text-align: end;'>
+      <strong class='col-7 offset-5 fw-bolder text-end'>
+        DIRECCIÓN EJECUTIVA DE CAPACITACIÓN ELECTORAL Y EDUCACIÓN CÍVICA
+      </strong>
+    </p>
+    <p style='text-align: end;'>
+      <strong class='col-7 offset-5 fw-bolder text-end'>
+        DIRECCIÓN DE EDUCACIÓN CÍVICA Y PARTICIPACIÓN CIUDADANA
+      </strong>
+    </p>
+  </header>
+  <section>
+    <p style='text-align: end;'>Ciudad de México, 31 de mayo de 2021</p>
+    <br>
+  </section>
+  <main>
+    <strong>A quien corresponda:</strong>
+    <br>
+    <br>
+    <p>
+      Por medio del presente, informo que la C.<span
+        style='padding: 0 2rem; margin: 0 0.5rem; border-bottom: 0.5px solid black'>
+        <%= data.user.fullname %>
+      </span>fue seleccionada
+      para participar en el Torneo México Debate 2021, el cual se llevará a cabo en la Ciudad de México del
+      8 al 11 de julio del año en curso, el proyecto en comento tiene la finalidad de fortalecer la cultura
+      de la deliberación entre jóvenes de nuestro país, mediante la generación de espacios basados en la
+      libertad de expresión, la enseñanza del debate y la solución de conflictos mediante el diálogo; dicho
+      modelo de debate incentiva a los jóvenes a investigar, estar informados y comunicar, no sólo de forma
+      efectiva y eficaz, sino proveyendo argumentos que solidifican sus aportaciones con evidencia. Su objetivo
+      es fomentar la cultura de diálogo y deliberación en jóvenes, dentro y fuera de los espacios escolares.
+    </p>
+    <p>
+      Para mayor información sobre este proyecto puede comunicarse con el Lic. José Alberto Bueno Saldaña, Subdirector
+      de Gestión y Operación de Programas al correo electrónico alberto.bueno@ine.mx.
+    </p>
+
+    <p>Sin otro particular, reciba un cordial saludo.</p>
+    <br><br><br>
+  </main>
+  <footer>
+    <p style='text-align: center;'>
+      <strong>
+        A T E N T A M E N T E <br>
+        SUBDIRECTOR DE GESTIÓN Y OPERACIÓN DE PROGRAMAS
+      </strong>
+    </p>
+    <br><br><br>
+    <p style='text-align: center;'>
+      <strong>
+        LIC. JOSÉ ALBERTO BUENO SALDAÑA
+      </strong>
+    </p>
+
+
+  </footer>
+</body>
+
+</html>

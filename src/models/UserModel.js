@@ -39,6 +39,10 @@ const UserSchema = new Schema({
   attendedWorkShops: {
     type: Boolean,
     default: false
+  },
+  category: {
+    type: String,
+    default: 'menor'
   }
 }, { timestamps: true })
 
@@ -100,7 +104,8 @@ UserSchema.methods.response = function () {
     curp,
     coachEmail,
     coachNumber,
-    attendedWorkShops
+    attendedWorkShops,
+    category
   } = this
   const fullname = this.fullname
   return {
@@ -117,7 +122,8 @@ UserSchema.methods.response = function () {
     curp,
     coachEmail,
     coachNumber,
-    attendedWorkShops
+    attendedWorkShops,
+    category
   }
 }
 
