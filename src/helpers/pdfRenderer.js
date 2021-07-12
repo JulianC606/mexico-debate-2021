@@ -33,13 +33,13 @@ class PDFRenderer {
           path: path.join(__dirname, '../templates/justificante.ejs'),
           opts: {
             format: 'Letter',
-            landscape: true,
+            landscape: false,
             printBackground: true,
             margin: {
-              left: '0px',
-              top: '0px',
-              right: '0px',
-              bottom: '0px'
+              left: '2.5cm',
+              top: '1cm',
+              right: '2.5cm',
+              bottom: '3cm'
             }
           }
         }

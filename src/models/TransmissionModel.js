@@ -7,6 +7,10 @@ const TransmissionSchema = new Schema({
     type: String,
     required: true
   },
+  description: {
+    type: String,
+    default: ''
+  },
   url: {
     type: String,
     required: true
