@@ -37,7 +37,7 @@ app.use(express.urlencoded({ extended: false })) // url encoder
 app.use(cookieParser()) // cookie parser
 app.use(i18n.init) // Translations
 app.use(helmet()) // Headers
-app.use('/', express.static(path.join(__dirname, './templates')))
+app.use('/', express.static(path.join(__dirname, '../public')))
 app.set('view engine', 'ejs') // Template Renderer
 app.set('views', path.join(__dirname, './templates')) // Set Views directory
 

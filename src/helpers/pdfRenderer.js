@@ -50,9 +50,10 @@ class PDFRenderer {
     return (
       new Promise(
         (resolve, reject) => {
+          const type = req.query.type ? req.query.type : 'menor'
           ejs.renderFile(
             this.template,
-            { data: { user: this.user, base: `${req.protocol}://${req.get('host')}` } },
+            { data: { user: this.user, base: `${req.protocol}://${req.get('host')}`, type } },
             {},
             (err, html) => {
               if (err !== null) {
