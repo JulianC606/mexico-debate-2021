@@ -12,7 +12,8 @@
 		"faker": "node src/bin/seed",
 		"user-importer": "NODE_ENV=development node src/bin/scripts/importUsers",
 		"new-user-emailer": "NODE_ENV=development node src/bin/scripts/emailSender",
-		"bulk-update-users":"NODE_ENV=development node src/bin/scripts/bulkUpdateUsers"
+		"bulk-update-users":"NODE_ENV=development node src/bin/scripts/bulkUpdateUsers",
+		"delete": "NODE_ENV=development node src/bin/scripts/delete"
 	},
 	"dependencies": {
 		"bcrypt": "^5.0.1",
